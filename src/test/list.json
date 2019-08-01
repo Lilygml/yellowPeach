@@ -1,0 +1,40 @@
+{
+  "code": "0",
+  "data": [
+    {
+      "name":"哈哈哈",
+      "telphone":"18978736478",
+      "address":"安徽省阜阳市太和县立新村",
+      "money":"40",
+      "box":"1",
+      "wuliudh":"28487354",
+      "suggestion":"呼和特变好奢侈"
+    },
+    {
+      "name":"哈哈哈",
+      "telphone":"18978736478",
+      "address":"上海市浦东新区全华信息大厦 1 楼渣打银行",
+      "money":"40",
+      "box":"1",
+      "wuliudh":"28487354",
+      "suggestion":"呼和特变好奢侈"
+    },{
+      "name":"哈哈哈",
+      "telphone":"18978736478",
+      "address":"哈哈哈哈哈哈哈哈哈哈",
+      "money":"40",
+      "box":"1",
+      "wuliudh":"28487354",
+      "suggestion":"呼和特变好奢侈"
+    },{
+      "name":"哈哈哈",
+      "telphone":"18978736478",
+      "address":"哈哈哈哈哈哈哈哈哈哈",
+      "money":"40",
+      "box":"1",
+      "wuliudh":"28487354",
+      "suggestion":"呼和特变好奢侈"
+    }
+  ],
+  "codeMsg":"请求成功"
+}
