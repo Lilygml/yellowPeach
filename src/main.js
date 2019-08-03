@@ -3,10 +3,13 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import vueResource from 'vue-resource'
 
-import axios from 'axios'
+// import weui from 'weui.js'
+// import 'weui'
+// Vue.prototype.$weui = weui
 
-Vue.use(axios)
+Vue.use(vueResource)
 
 Vue.config.productionTip = false
 
@@ -19,7 +22,6 @@ window.ENV = {
 new Vue({
   el: '#app',
   router,
-  axios,
   components: { App },
   template: '<App/>'
 })

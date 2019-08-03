@@ -14,7 +14,10 @@ export default new Router({
       path: '/index/list',
       name: '列表',
       component: resolve => require(['@/views/list.vue'], resolve)
+    }, {
+      path: '/index/edit',
+      name: '列表',
+      component: resolve => require(['@/views/edit.vue'], resolve)
     }
-
   ]
 })

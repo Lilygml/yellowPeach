@@ -24,6 +24,10 @@ module.exports = {
   entry: {
     app: './src/main.js'
   },
+  externals: {
+    'weui': 'weui',
+    'weui.js': 'weui.js'
+  },
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
@@ -50,6 +54,10 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader',
         include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+      },
+      {
+        test: /\.(css|sass)$/,
+        loaders: ['style', 'css', 'sass']
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

@@ -2,7 +2,7 @@
   <div class='list'>
     <!-- header -->
     <div class='header'>
-      <div class='header-left'>{{header.leftText}}</div>
+      <div class='header-left' @click.stop.prevent="click_header_left">{{header.leftText}}</div>
       <div class='header-title'>{{header.title}}</div>
       <div class='header-right'>
         <div v-show="header.showRight">关闭</div>
@@ -10,23 +10,11 @@
     </div>
     <!-- container -->
     <div class="page-container">
-      <div v-for="(item,index) in datalist" class="list-item" :key="index">
-        <div class="item-left">
-          <div class="cell-item">
-            <b>{{item.name}}</b>
-            <span>{{item.telphone}}</span>
-          </div>
-          <div class="cell-item">
-            <b>总价: {{item.money}}</b>
-            <span>箱数: {{item.box}}</span>
-          </div>
-          <div class="cell-item">
-            <span>{{item.address}}</span>
-          </div>
-        </div>
-        <div class="item-right" @click.stop.prevent="click_edit(item)">
-          <i>&nbsp;</i>
-          <div>编辑</div>
+      <div class="weui-cells">
+        <div class="weui-cell">
+          <div class="weui-cell__hd">HHHH</div>
+          <div class="weui-cell__bd">hfhiehue</div>
+          <div class="weui-cell__ft">></div>
         </div>
       </div>
     </div>
@@ -49,42 +37,31 @@ export default {
     }
   },
   mounted () {
+    console.error(0)
     this._get_data()
   },
   methods: {
+    click_header_left () {
+      this.$router.back()
+    },
     _get_data (callback) {
-      let suecess = (data) => {
-         this.datalist = data;
-         typeof callback === 'function' && callback();
-      }
       if (window.ENV.test) {
         let data = require('@/test/list.json')
         console.error(data, '测试数据')
-        let _data = data && data.data.rows || []
-        suecess(_data)
+        this.datalist = data && data.data.rows || []
         return
       }
       axios.post('http://www.sgyhl18.club:520/api/list')
         .then(function (response) {
           console.log('请求成功返回数据', response)
-          let _data =  response.data.data;
-          console.error(_data)
-          if (_data.code === 0) {
-            console.log('请求成功返回数据', _data.rows)
-            suecess(_data.rows || [])
+          if (response.code === '0') {
+            console.log('请求成功返回数据', response.data)
           }
+          typeof callback === 'function' && callback()
         })
         .catch(function (error) {
           console.log(error)
         })
-    },
-    click_edit (item) {
-      this.$router.push({
-        path: '/index/edit',
-        query: {
-          id: item.id || ''
-        }
-      })
     }
   }
 }
