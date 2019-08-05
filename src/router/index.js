@@ -5,6 +5,7 @@ import HelloWorld from '@/components/HelloWorld'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'hash',
   routes: [
     {
       path: '/',
@@ -16,7 +17,7 @@ export default new Router({
       component: resolve => require(['@/views/list.vue'], resolve)
     }, {
       path: '/index/edit',
-      name: '列表',
+      name: '编辑',
       component: resolve => require(['@/views/edit.vue'], resolve)
     }
   ]

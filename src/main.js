@@ -4,10 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import vueResource from 'vue-resource'
-
-// import weui from 'weui.js'
-// import 'weui'
-// Vue.prototype.$weui = weui
+import store from './store/index.js'
 
 Vue.use(vueResource)
 
@@ -22,6 +19,7 @@ window.ENV = {
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
