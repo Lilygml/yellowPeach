@@ -83,64 +83,69 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 const axios = require('axios')
 export default {
   data () {
     return {
       header: {
         title: '编辑',
-        showRight: true,
+        showRight: false,
         showLeft: true,
         leftText: '返回'
       },
-      // form: {
-      //   name: '',
-      //   telphone: '',
-      //   address: '',
-      //   money: '',
-      //   box: '', /* //箱数 */
-      //   wuliudh: '', /* //物流单号 */
-      //   suggestion: '' /* //备注 */
-      // }
+      PAGE: {},
     }
   },
   mounted () {
+    this.PAGE = {...this.$route.query}
     // this._get_data()
+    console.error(this.PAGE)
   },
   computed: {
     form() {
-      return this.store_getItemData();
+      let params = {
+        name: '',
+        telphone: '',
+        address: '',
+        money: '',
+        box: '', /* //箱数 */
+        wuliudh: '', /* //物流单号 */
+        suggestion: '' /* //备注 */
+      };
+      if(this.PAGE.id){
+        return this._ex_obj(params,this.store_getItemData());
+      }else{
+        return params;
+      }
     }
   },
   methods: {
     ...mapGetters('base', ['store_getItemData']),
+    ...mapMutations('base', ['clear_store']),
+    _ex_obj(obj,params){
+      for (const key in obj) {
+        obj[key] = params[key]
+      }
+      return obj;
+    },
     click_header_left () {
-      this.$router.back()
+      this.clear_store();
+      this.$router.back();
     },
     _get_data (callback) {
       if (window.ENV.test) {
         let data = require('@/test/list.json')
-        console.error(data, '测试数据')
         this.datalist = data && data.data.rows || []
         return
       }
-      /* let params = '';
-      for (let key in this.form) {
-        if (this.form[key]) {
-        console.error(this.form,"oooo")
-          params = `${key}=${this.form[key]}&`
-        }
-        return params
-      }
-       console.error(params,"00000") */
-      axios.post('http://www.sgyhl18.club:520/api/add',{
-        ...this.form
-      })
-        .then(function (response) {
-          console.log('请求成功返回数据', response)
-          if (response.code === '0') {
-            console.log('请求成功返回数据', response.data)
+      let url = this.PAGE.id ? "http://www.sgyhl18.club:520/api/edit2" : "http://www.sgyhl18.club:520/api/add2";
+      let params = this.PAGE.id ? {...this.form, ...{id: this.PAGE.id}} : this.form;
+      axios.post(url,params)
+        .then((response) => {
+          console.log('请求成功返回数据', response.data.code)
+          if (response.data.code === 0) {
+            this.click_header_left();
           }
           typeof callback === 'function' && callback()
         })

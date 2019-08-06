@@ -5,7 +5,7 @@
       <div class='header-left'>{{header.leftText}}</div>
       <div class='header-title'>{{header.title}}</div>
       <div class='header-right'>
-        <div v-show="header.showRight">新增</div>
+        <div v-show="header.showRight" @click.stop.prevent="click_add">新增</div>
       </div>
     </div>
     <!-- container -->
@@ -24,9 +24,15 @@
             <span>{{item.address}}</span>
           </div>
         </div>
-        <div class="item-right" @click.stop.prevent="click_edit(item)">
-          <i>&nbsp;</i>
-          <div>编辑</div>
+        <div class="item-right">
+          <div class="item-edit" @click.stop.prevent="click_edit(item)">
+            <i>&nbsp;</i>
+            <div>编辑</div>
+          </div>
+          <div class="item-delete" @click.stop.prevent="click_delete(item)">
+            <i>&nbsp;</i>
+            <div>删除</div>
+          </div>
         </div>
       </div>
     </div>
@@ -80,6 +86,11 @@ export default {
           console.log(error)
         })
     },
+    click_add(){
+      this.$router.push({
+        path: '/index/edit',
+      })
+    },
     click_edit (item) {
       this.store_setItemData(item);
       this.$router.push({
@@ -88,6 +99,19 @@ export default {
           id: item.id || ''
         }
       })
+    },
+    click_delete (item) {
+      axios.post('https://www.sgyhl18.club/api/remove2',JSON.stringify({ids: item.id}))
+        .then((response) => {
+          console.log('请求成功返回数据', response.data)
+          let _data =  response.data;
+          if (_data.code === 0) {
+            this._get_data();
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     }
   }
 }
@@ -132,16 +156,32 @@ export default {
           }
         }
         .item-right{
+          width: 20%;
           border-left: 1px solid #e5e5e5;
           padding-left: .5rem;
-          i{
-            display: inline-block;
-            width: .6rem;
-            height: .6rem;
-            background: url('../assets/img/edit.png') no-repeat center;
-            background-size: 100%;
-            padding-bottom: .2rem;
+          display: flex;
+          justify-content: space-between;
+          .item-delete{
+            i{
+              display: inline-block;
+              width: .6rem;
+              height: .6rem;
+              background: url('../assets/img/delete.png') no-repeat center;
+              background-size: 100%;
+              padding-bottom: .2rem;
+            }
           }
+          .item-edit{
+            i{
+              display: inline-block;
+              width: .6rem;
+              height: .6rem;
+              background: url('../assets/img/edit.png') no-repeat center;
+              background-size: 100%;
+              padding-bottom: .2rem;
+            }
+          }
+
         }
       }
     }
