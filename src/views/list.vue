@@ -67,18 +67,14 @@ export default {
       }
       if (window.ENV.test) {
         let data = require('@/test/list.json')
-        console.error(data, '测试数据')
         let _data = data && data.data.rows || []
         suecess(_data)
         return
       }
       axios.post('https://www.sgyhl18.club/api/list')
         .then(function (response) {
-          console.log('请求成功返回数据', response)
           let _data =  response.data.data;
-          console.error(_data)
           if (_data.code === 0) {
-            console.log('请求成功返回数据', _data.rows)
             suecess(_data.rows || [])
           }
         })
@@ -103,7 +99,6 @@ export default {
     click_delete (item) {
       axios.post('https://www.sgyhl18.club/api/remove2',{ids: String(item.id)})
         .then((response) => {
-          console.log('请求成功返回数据', response.data)
           let _data =  response.data;
           if (_data.code === 0) {
             this._get_data();

@@ -100,7 +100,6 @@ export default {
   mounted () {
     this.PAGE = {...this.$route.query}
     // this._get_data()
-    console.error(this.PAGE)
   },
   computed: {
     form() {
@@ -143,7 +142,6 @@ export default {
       let params = this.PAGE.id ? {...this.form, ...{id: this.PAGE.id}} : this.form;
       axios.post(url,params)
         .then((response) => {
-          console.log('请求成功返回数据', response.data.code)
           if (response.data.code === 0) {
             this.click_header_left();
           }
