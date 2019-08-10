@@ -101,7 +101,7 @@ export default {
       })
     },
     click_delete (item) {
-      axios.post('https://www.sgyhl18.club/api/remove2',JSON.stringify({ids: item.id}))
+      axios.post('https://www.sgyhl18.club/api/remove2',{ids: String(item.id)})
         .then((response) => {
           console.log('请求成功返回数据', response.data)
           let _data =  response.data;
